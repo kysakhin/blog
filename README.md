@@ -19,7 +19,7 @@ For security reasons I am not sharing my MongoDB configuration options. It is se
 
 After that, go to your `./backend/config/` and make a new file called `db.js` and insert this code into it 
 considering installation for MongoDB went smoothly, and you have not changed any default configuration, 
-```shell
+```javascript
 const mongoose = require('mongoose');
 const connectDB = async () => {
     try {
