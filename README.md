@@ -33,7 +33,7 @@ const connectDB = async () => {
     }
 }
 ```
-
+And also make a new folder called `uploads` in the `backend` directory. In future updates I shall automate that.
 
 ## Running
 In the root directory, run
