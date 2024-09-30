@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
+const fs = require('fs');
+
+// checking if folder for uploads exists
+const check = path.join(__dirname, "../uploads/");
+if (!fs.existsSync(check)) {
+  console.log('Created a new uploads folder');
+  fs.mkdirSync(check, { recursive: true });
+}
 
 const blog = new mongoose.Schema({
   id: {type: String, default: uuidv4 },
