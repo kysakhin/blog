@@ -7,12 +7,12 @@ const Navbar = () => {
       <Nav>
         <NavMenu>
           <NavLink to="/home" activeStyle>
-            About
+            Home
           </NavLink>
           <NavLink to="/allBlogs" activeStyle>
             All Blogs
           </NavLink>
-          <NavLink to="/portfolio" activeStyle>
+          <NavLink to="https://portfolio-akhins-projects.vercel.app/" target="_blank" activeStyle>
             Portfolio Website
           </NavLink>
         </NavMenu>
