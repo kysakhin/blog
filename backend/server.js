@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const Blog = require('./schema/blog.js')
 const blogRouter = require('./routes/content')
+const blogContentRouter = require('./routes/blogContent')
 
 const app = express();
 const port = 5000;
@@ -13,6 +14,7 @@ app.use(express.json());
 
 
 app.use('/api', blogRouter);
+app.use('/blog', blogContentRouter);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
