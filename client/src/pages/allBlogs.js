@@ -1,8 +1,37 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from 'react-router-dom';
 
 const AllBlogs = () => {
+
+  const [ uniq, setUniq ] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/');
+        const categories = [...new Set(response.data.map(item => item.category))];
+        setUniq(categories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
-  <h1>No bLogs</h1>
+    <div>
+    <h1>Categories</h1>
+    <ul>
+      {uniq.map((category, index) => (
+        <li key={index}>
+          <Link to={`items/${category}`}> {category} </Link>
+        </li>
+      ))}
+    </ul>
+    </div>
   );
 };
 
