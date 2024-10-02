@@ -3,11 +3,16 @@ const connectDB = require('./config/db.js')
 const multer = require('multer');
 const path = require('path');
 const Blog = require('./schema/blog.js')
+const blogRouter = require('./routes/content')
 
 const app = express();
 const port = 5000;
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+
+
+app.use('/api', blogRouter);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -30,6 +35,7 @@ app.post('/upload', upload.single('file'), async(req,  res) => {
       category: category
     })
     await newBlog.save();
+    console.log(newBlog.contentFile);
     res.status(201).json({ message: 'Success' })
   } catch(err) {
     res.status(500).json({ message: 'Unsuccessful' })
