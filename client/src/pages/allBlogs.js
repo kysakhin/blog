@@ -3,6 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+const linkStyle = {
+  textDecoration: "none",
+  color: "white"
+};
+
+
 const AllBlogs = () => {
 
   const [ uniq, setUniq ] = useState([]);
@@ -23,14 +29,14 @@ const AllBlogs = () => {
 
   return (
     <div>
-    <h1>Categories</h1>
-    <ul>
-      {uniq.map((category, index) => (
-        <li key={index}>
-            <Link to={`/category/${category}`}> {category} </Link>
-        </li>
-      ))}
-    </ul>
+      <h1>Categories</h1>
+      <ul>
+        {uniq.map((category, index) => (
+          <li key={index}>
+            <Link to={`/category/${category}`} style={linkStyle}> {category} </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

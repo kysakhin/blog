@@ -21,7 +21,7 @@ const Blog = () => {
   }, [id]); // Add id to the dependency array to refetch when it changes
 
   return (
-    <div>
+    <div className="md">
       <Markdown>
         {content}
       </Markdown>

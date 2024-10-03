@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
+const linkStyle = {
+  textDecoration: "none",
+  color: "white",
+};
+
 const HandleItems = () => {
   const { category } = useParams(); 
   const [items, setItems] = useState([]);
@@ -25,9 +30,9 @@ const HandleItems = () => {
       <h2>Items in Category: {category}</h2>
       <ul>
         {items.map((item, index) => (
-          <React.Fragment key={index}>
-            <Link to={`/blog/${item.id}`}>{item.title}</Link> <br/>
-          </React.Fragment>
+          <li>
+            <Link to={`/blog/${item.id}`} style={linkStyle}>{item.title}</Link> <br/>
+          </li>
         ))}
       </ul>
     </div>

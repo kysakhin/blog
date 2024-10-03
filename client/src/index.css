@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.root {
+  background-color: #0e0309;
+  color: white;
+  font-family: "Courier New";
+  min-height: 100vh;
+  max-height: fit-content;
+  text-align: center;
+}
+
+li {
+  list-style-type: none;
+  padding: 0.5rem;
+}
+
+.home {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.md {
+  text-align: start !important;
+  width: 50%;
+  margin: 0 auto;
+}

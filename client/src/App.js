@@ -10,18 +10,18 @@ import HandleItems from "./pages/handleItems";
 
 function App() {
   return (
-  <>
+  <div className="root">
       <Router>
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/home" element={<Home />} />
-          <Route exact path="/allBlogs" element={<AllBlogs />} />
-          <Route path="/category/:category" element={<HandleItems />} />
-          <Route exact path="/blog/:id" element={<Blog />} />
+          <Route exact path="/" element={<Home />} activestyle />
+          <Route exact path="/home" element={<Home />} activestyle/>
+          <Route exact path="/allBlogs" element={<AllBlogs />} activestyle/>
+          <Route path="/category/:category" element={<HandleItems />} activestyle/>
+          <Route exact path="/blog/:id" element={<Blog />} activestyle/>
         </Routes>
       </Router>
-  </>
+  </div>
   );
 }
 
