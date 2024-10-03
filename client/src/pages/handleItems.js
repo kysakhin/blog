@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 
 const linkStyle = {
   textDecoration: "none",
-  color: "white",
+  color: "#374375"
 };
 
 const HandleItems = () => {

@@ -13,8 +13,8 @@ code {
 }
 
 .root {
-  background-color: #0e0309;
-  color: white;
+  background-color: #fffcf5;
+  color: #374375;
   font-family: "Courier New";
   min-height: 100vh;
   max-height: fit-content;
