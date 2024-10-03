@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const AllBlogs = () => {
 
@@ -26,7 +27,7 @@ const AllBlogs = () => {
     <ul>
       {uniq.map((category, index) => (
         <li key={index}>
-            <
+            <Link to={`/category/${category}`}> {category} </Link>
         </li>
       ))}
     </ul>
