@@ -1,15 +1,19 @@
-# WORK IN PROGRESS
-
 # Blog application
 This is a small little project where I want to be able to write blogs without actually modifying my code. Basically having authentication only to myself and having permissions to modify my database that I shall be using for this project. This is only just mostly testing. Deploying will be on a different repository. 
 So whenever I learn something new, I have my own login to this and I can write my blog which will be visible to others.
 
+## Dependencies 
+This project requires:
+- **Node.js**: Ensure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
+- **npm**: npm comes bundled with Node.js. You can check if you have it by running `npm -v` in your terminal.
+
 ## Installation and setting up
 
+Clone the repository:
 ```shell
 git clone https://github.com/kysakhin/blog.git
 ```
-and then
+and then install the dependencies,
 ```shell
 npm i 
 cd backend && npm i 
@@ -17,15 +21,16 @@ cd ../client && npm i
 ```
 
 ## Configuring
-In your backend directory, create a new file called `.env` and add environmental variables for your database connection
-If your MongoDB is running locally, create a new collection called blog, and put this code:
-```
-DATABASE_URL='mongodb://localhost:27017/blog/'
-```
 
-If you are using cloud MongoDB, that is, MongoDB Atlas, then put the connection uri instead of this. The connection string should also include your password for your user.
+### Local MongoDB
+If you are using MongoDB on your localhost, then you can skip this step
 
-And also make a new folder called `uploads` in the `backend` directory. In future updates I shall automate that.
+### MongoDB Atlas
+If you are using cloud MongoDB, i.e, MongoDB Atlas, then you'll have one extra step.
+Create a new file called `.env` in your backend folder. Put your MongoDB connection string to that. 
+```
+DATABASE_URL = ''
+```
 
 ## Running
 In the root directory, run

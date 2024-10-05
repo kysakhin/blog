@@ -1,6 +1,12 @@
 require('dotenv').config();
 
-const dburl = process.env.DATABASE_URL
+function getUrl() {
+  const dburl = process.env.DATABASE_URL || "mongodb://localhost:27017/blog/";
+  return dburl;
+}
+
+const dburl = getUrl();
+
 
 // I tried to use mongodb module to connect and it worked but mongoose also worked. Feel free to use whatever you want
 //
