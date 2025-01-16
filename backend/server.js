@@ -1,50 +1,58 @@
 const express = require('express');
 const connectDB = require('./config/db.js')
 const multer = require('multer');
-const path = require('path');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const Blog = require('./schema/blog.js')
 const blogRouter = require('./routes/content')
 const blogContentRouter = require('./routes/blogContent')
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json());
+// configure cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-
-app.use('/api', blogRouter);
-app.use('/blog', blogContentRouter);
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
+// configure storage
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'blog-files',
+    resource_type: 'raw'
   }
 });
 
-const upload = multer({ storage })
+const upload = multer({ storage: storage });
 
-app.post('/upload', upload.single('file'), async(req,  res) => {
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use('/api', blogRouter);
+app.use('/blog', blogContentRouter);
+
+app.post('/upload', upload.single('file'), async(req, res) => {
   try {
     const { title, category } = req.body;
-    const contentFile = req.file.filename;
+    
+    // req.file.path will have the cloudinary url
     const newBlog = new Blog({
       title: title,
-      contentFile: contentFile,
+      contentFile: req.file.path,
       category: category
-    })
+    });
+
     await newBlog.save();
-    console.log(newBlog.contentFile);
-    res.status(201).json({ message: 'Success' })
+    res.status(201).json({ message: 'Success' });
   } catch(err) {
-    res.status(500).json({ message: 'Unsuccessful' })
-    console.log(err);
+    console.error(err);
+    res.status(500).json({ message: 'Unsuccessful' });
   }
-})
+});
 
 connectDB();
+app.listen(port, () => console.log(`listening on port ${port}`));
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+module.exports = app;

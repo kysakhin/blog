@@ -1,58 +1,37 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const Blog = require('../schema/blog');
 const cors = require('cors');
-
 const router = express.Router();
+
 router.use(cors());
 
+// Get all unique categories
 router.get('/', async (req, res) => {
   try {
-    const blogs = await Blog.find({}).select('category');
-    res.send(blogs);
+    const blogs = await Blog.find({}).distinct('category');
+    res.status(200).json(blogs);
   } catch(err) {
     console.error(err);
+    res.status(500).json({ message: 'Failed to fetch categories' });
   }
-})
+});
 
-//router.get('/leetcode', async (req, res) => {
-//  try {
-//    const blogs = await Blog.find({ category: 'leetcode' }).select('id title');
-//
-//    if (blogs.length == 0)
-//      return res.status(404).json({ message: 'No blogs found' })
-//  res.send(blogs);
-//  } catch(err) {
-//    console.error(err);
-//    res.send(500).json({ message: 'Internal server error' })
-//  }
-//});
-//
-//router.get('/webdevel', async(req, res) => {
-//  try {
-//    const blogs = await Blog.find({ category: 'webdevel' }).select('id title');
-//
-//    if (blogs.length == 0)
-//      return res.status(404).json({ message: 'No blogs found' })
-//    res.json(blogs.title);
-//  } catch(err) {
-//    console.log(err);
-//    res.send(500).json({ message: 'Internal server error' })
-//  }
-//})
-
+// Get blogs by category
 router.get('/:category', async (req, res) => {
   try {
     const { category } = req.params;
-    const blogs = await Blog.find({ category: category }).select('id title');
+    const blogs = await Blog.find({ category: category })
+                          .select('id title createdAt')
 
-    if (blogs.length == 0)
-      return res.status(404).json({ message: 'No blogs found' })
-  res.send(blogs);
+    if (blogs.length === 0) {
+      return res.status(404).json({ message: 'No blogs found in this category' });
+    }
+
+    res.status(200).json(blogs);
   } catch(err) {
     console.error(err);
-    res.send(500).json({ message: 'Internal server error' })
+    res.status(500).json({ message: 'Failed to fetch blogs' });
   }
-})
+});
 
 module.exports = router;

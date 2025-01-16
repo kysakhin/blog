@@ -1,27 +1,29 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const axios = require('axios');
 const Blog = require('../schema/blog');
 const cors = require('cors');
-const fs = require('fs');
-
 const router = express.Router();
+
 router.use(cors());
 
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const path = await Blog.findOne({id: id }).select('contentFile');
-    fs.readFile(path.contentFile, 'utf-8', (err, data) => {
-      if (err) {
-        console.log(err)
-        res.status(500).json({ message: 'trouble reading file' })
-      }
-    res.status(200).send(data);
-    })
+    const blog = await Blog.findOne({ id: id });
+    
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+
+    // Fetch the content from Cloudinary URL
+    const response = await axios.get(blog.contentFile);
+    const content = response.data;
+    
+    res.status(200).send(content);
   } catch(err) {
     console.error(err);
-    res.status(500).json({ message: "Server issue" })
+    res.status(500).json({ message: "Server issue" });
   }
-})
+});
 
 module.exports = router;
